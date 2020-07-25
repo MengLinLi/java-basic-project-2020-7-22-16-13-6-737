@@ -19,5 +19,11 @@ public class CalculatePoints {
             if (extralCount.compareTo(new BigDecimal(20))==1) extralCount=new BigDecimal(20);
             consume.addBigDecimal(extralCount.multiply(new BigDecimal(5)));
         }
+        if ("信用卡分期购物消费".equals(consume.getConsumMode())) {
+            BigDecimal count = consume.getConsumAmount().divideToIntegralValue(new BigDecimal(10));
+            consume.addBigDecimal(count.multiply(new BigDecimal(1)));
+            if (consume.getConsumAmount().compareTo(new BigDecimal(5000))==1)
+                consume.addBigDecimal(new BigDecimal(100));
+        }
     }
 }
