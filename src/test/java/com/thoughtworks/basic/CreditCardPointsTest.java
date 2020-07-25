@@ -24,6 +24,21 @@ public class CreditCardPointsTest {
                 "2020-07-02 18:50 POS机消费 8元，积分 +0",result);
 
     }
+    @Test
+    public void should_return_10_when_given_normal_user_pos_amont_108(){
+        //given
+        Consume consume = new Consume("POS机消费",new BigDecimal(108),"normal","2020-07-02 18:40");
+        List<Consume> consumes = new ArrayList<>();
+        consumes.add(consume);
+        CreditCardPoints creditCardIntegral = new CreditCardPoints(consumes);
+        //when
+        String  result=creditCardIntegral.calculationPoints();
+        //then
+        Assert.assertEquals("总积分：10\n" +
+                "2020-07-02 18:40 POS机消费 108元，积分 +10",result);
+    }
+
+
 
 }
 
