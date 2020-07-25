@@ -16,6 +16,10 @@ public class CreditCardPoints {
         CalculatePoints calculatePoints=new CalculatePoints();
         for (Consume consume :consumes){
             calculatePoints.countPoints(consume);
+            if ("goldcardUser".equals(consume.getCustomType())){
+                consume.setInitialPoints(consume.getInitialPoints().add(consume.getInitialPoints().multiply(new BigDecimal(0.5))));
+                consume.setInitialPoints(consume.getInitialPoints().setScale(0,BigDecimal.ROUND_DOWN));
+            }
             points = points.add(consume.getInitialPoints());
             resultContent = resultContent+"\n"+consume.getConsumTime()+" "+consume.getConsumMode()+" "+consume.getConsumAmount()+"元，"+"积分 +"+consume.getInitialPoints();
         }

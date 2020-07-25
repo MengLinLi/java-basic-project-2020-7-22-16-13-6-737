@@ -227,6 +227,34 @@ public class CreditCardPointsTest {
                 "2020-07-02 23:00 信用卡分期购物消费 6400元，积分 +740\n"+
                 "2020-07-02 22:30 快捷支付消费 2208元，积分 +320",result);
     }
+
+    @Test
+    public void should_return_440_when_given_normal_goldCardUser_pos_amont_4400(){
+        //given
+        Consume consume = new Consume("信用卡分期购物消费",new BigDecimal(4400) ,"goldcardUser","2020-07-02 23:00");
+        List<Consume> consumes = new ArrayList<>();
+        consumes.add(consume);
+        CreditCardPoints creditCardPoints = new CreditCardPoints(consumes);
+        //when
+        String  result=creditCardPoints.calculationPoints();
+        //then
+        Assert.assertEquals("总积分：660\n" +
+                "2020-07-02 23:00 信用卡分期购物消费 4400元，积分 +660",result);
+    }
+
+    @Test
+    public void should_return_1060_when_given_normal_goldCardUser_pos_amont_6400(){
+        //given
+        Consume consume = new Consume("信用卡分期购物消费",new BigDecimal(6400),"goldcardUser","2020-07-02 23:00");
+        List<Consume> consumes = new ArrayList<>();
+        consumes.add(consume);
+        CreditCardPoints creditCardPoints = new CreditCardPoints(consumes);
+        //when
+        String  result=creditCardPoints.calculationPoints();
+        //then
+        Assert.assertEquals("总积分：1060\n" +
+                "2020-07-02 23:00 信用卡分期购物消费 6400元，积分 +1060",result);
+    }
 }
 
 
