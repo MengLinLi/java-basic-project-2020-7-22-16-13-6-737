@@ -146,6 +146,22 @@ public class CreditCardPointsTest {
         Assert.assertEquals( "总积分：320\n" +
                 "2020-07-02 22:30 快捷支付消费 2208元，积分 +320",result);
     }
+    @Test
+    public void should_return_340_when_given_normal_user_pos_amont_208_2208(){
+        //given
+        Consume consume1 = new Consume("快捷支付消费",new BigDecimal(2208),"normal","2020-07-02 22:30");
+        Consume consume2 = new Consume("POS机消费",new BigDecimal(208),"normal","2020-07-02 18:50");
+        List<Consume> consumes = new ArrayList<>();
+        consumes.add(consume1);
+        consumes.add(consume2);
+        CreditCardPoints creditCardPoints = new CreditCardPoints(consumes);
+        //when
+        String  result=creditCardPoints.calculationPoints();
+        //then
+        Assert.assertEquals( "总积分：340\n" +
+                "2020-07-02 22:30 快捷支付消费 2208元，积分 +320\n"+
+                "2020-07-02 18:50 POS机消费 208元，积分 +20" ,result);
+    }
 }
 
 
