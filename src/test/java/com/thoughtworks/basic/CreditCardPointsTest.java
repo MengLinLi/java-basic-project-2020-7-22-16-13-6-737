@@ -162,6 +162,41 @@ public class CreditCardPointsTest {
                 "2020-07-02 22:30 快捷支付消费 2208元，积分 +320\n"+
                 "2020-07-02 18:50 POS机消费 208元，积分 +20" ,result);
     }
+
+    @Test
+    public void should_return_382_when_given_normal_user_pos_amont_2208_208_208_22_more(){
+        //given
+        Consume consume1 = new Consume("快捷支付消费",new BigDecimal(2208),"normal","2020-07-02 22:30");
+        Consume consume2 = new Consume("快捷支付消费",new BigDecimal(208),"normal","2020-07-02 20:30");
+        Consume consume3 = new Consume("POS机消费",new BigDecimal(208),"normal","2020-07-02 18:50");
+        Consume consume4 = new Consume("微信支付消费",new BigDecimal(22),"normal","2020-07-02 12:20");
+        Consume consume5 = new Consume("微信支付消费",new BigDecimal(10),"normal","2020-07-02 08:20");
+        Consume consume6 = new Consume("POS机消费",new BigDecimal(108),"normal","2020-07-01 18:50");
+        Consume consume7 = new Consume("微信支付消费",new BigDecimal(18),"normal","2020-07-01 12:50");
+        Consume consume8 = new Consume("微信支付消费",new BigDecimal(25),"normal","2020-07-01 12:20");
+        List<Consume> consumes = new ArrayList<>();
+        consumes.add(consume1);
+        consumes.add(consume2);
+        consumes.add(consume3);
+        consumes.add(consume4);
+        consumes.add(consume5);
+        consumes.add(consume6);
+        consumes.add(consume7);
+        consumes.add(consume8);
+        CreditCardPoints creditCardPoints = new CreditCardPoints(consumes);
+        //when
+        String  result=creditCardPoints.calculationPoints();
+        //then
+        Assert.assertEquals("总积分：382\n" +
+                "2020-07-02 22:30 快捷支付消费 2208元，积分 +320\n" +
+                "2020-07-02 20:30 快捷支付消费 208元，积分 +30\n" +
+                "2020-07-02 18:50 POS机消费 208元，积分 +20\n" +
+                "2020-07-02 12:20 微信支付消费 22元，积分 +1\n" +
+                "2020-07-02 08:20 微信支付消费 10元，积分 +0\n" +
+                "2020-07-01 18:50 POS机消费 108元，积分 +10\n" +
+                "2020-07-01 12:50 微信支付消费 18元，积分 +0\n" +
+                "2020-07-01 12:20 微信支付消费 25元，积分 +1",result);
+    }
 }
 
 
