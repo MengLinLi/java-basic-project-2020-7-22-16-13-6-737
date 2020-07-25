@@ -86,7 +86,23 @@ public class CreditCardPointsTest {
         Assert.assertEquals("总积分：1\n" +
                 "2020-07-02 08:20 微信支付消费 25元，积分 +1",result);
     }
+    @Test
+    public void should_return_1_when_given_normal_user_Wechat_amont_25_10(){
+        //given
+        Consume consume1 = new Consume("微信支付消费",new BigDecimal(25),"normal","2020-07-02 08:20");
+        Consume consume2 = new Consume("微信支付消费",new BigDecimal(10),"normal","2020-07-02 08:35");
 
+        List<Consume> consumes = new ArrayList<>();
+        consumes.add(consume1);
+        consumes.add(consume2);
+        CreditCardPoints creditCardPoints = new CreditCardPoints(consumes);
+        //when
+        String  result=creditCardPoints.calculationPoints();
+        //then
+        Assert.assertEquals( "总积分：1\n" +
+                "2020-07-02 08:20 微信支付消费 25元，积分 +1\n"+
+                "2020-07-02 08:35 微信支付消费 10元，积分 +0",result);
+    }
 
 }
 
