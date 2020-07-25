@@ -132,6 +132,20 @@ public class CreditCardPointsTest {
                 "2020-07-02 12:20 微信支付消费 22元，积分 +1\n"+
                 "2020-07-02 18:50 POS机消费 208元，积分 +20" ,result);
     }
+
+    @Test
+    public void should_return_320_when_given_normal_user_pos_amont_2208(){
+        //given
+        Consume consume = new Consume("快捷支付消费",new BigDecimal(2208),"normal","2020-07-02 22:30");
+        List<Consume> consumes = new ArrayList<>();
+        consumes.add(consume);
+        CreditCardPoints creditCardPoints = new CreditCardPoints(consumes);
+        //when
+        String  result=creditCardPoints.calculationPoints();
+        //then
+        Assert.assertEquals( "总积分：320\n" +
+                "2020-07-02 22:30 快捷支付消费 2208元，积分 +320",result);
+    }
 }
 
 
